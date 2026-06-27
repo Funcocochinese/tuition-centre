@@ -1271,8 +1271,9 @@ function sbStatus(msg,ok=true){
 }
 
 async function sbPush(){
+  const payRates=JSON.parse(localStorage.getItem('tc_payRates')||'{}');
   const payload={
-    schedule,teachers,students,parents,payRecords,teacherAck,teacherLock,lvlRates,payMode,
+    schedule,teachers,students,parents,payRecords,teacherAck,teacherLock,lvlRates,payMode,payRates,
     _ids:{_nid,_sid,_tid,_pid},
     savedAt:new Date().toISOString()
   };
@@ -1308,6 +1309,7 @@ async function sbPull(){
     if(d.teacherLock)teacherLock=d.teacherLock;
     if(d.lvlRates)lvlRates=d.lvlRates;
     if(d.payMode)payMode=d.payMode;
+    if(d.payRates)localStorage.setItem('tc_payRates',JSON.stringify(d.payRates));
     if(d._ids){_nid=d._ids._nid||1;_sid=d._ids._sid||1;_tid=d._ids._tid||1;_pid=d._ids._pid||1;}
     // Normalize
     schedule.forEach(r=>{
